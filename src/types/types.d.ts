@@ -9,12 +9,6 @@ interface IState {
   loading: boolean;
 }
 
-enum ActionType {
-  GET_USERS = 'GET_USERS',
-  CLEAR_USERS = 'CLEAR_USERS',
-  SET_LOADING = 'SET_LOADING',
-}
-
 interface IGetUsers {
   type: 'GET_USERS';
   payload: IUser[];
@@ -28,7 +22,20 @@ interface ISetLoading {
   type: 'SET_LOADING';
 }
 
-type IAction = IGetUsers | IClearUsers | ISetLoading;
+interface ISetAlert {
+  type: 'SET_ALERT';
+  payload: { msg: string; type: string };
+}
+
+interface IRemoveAlert {
+  type: 'REMOVE_ALERT';
+}
+
+enum ActionType {
+  GET_USERS = 'GET_USERS',
+  CLEAR_USERS = 'CLEAR_USERS',
+  SET_LOADING = 'SET_LOADING',
+}
 
 type Change = React.ChangeEvent<HTMLInputElement>;
 type Submit = React.FormEvent<HTMLFormElement>;
