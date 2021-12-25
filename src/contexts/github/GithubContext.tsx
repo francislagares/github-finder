@@ -4,7 +4,8 @@ import githubReducer from './GithubReducer';
 interface IGithubContext {
   users: IUser[];
   loading: boolean;
-  fetchUsers?: () => Promise<void>;
+  searchUsers: (text: string) => Promise<void>;
+  clearUsers: () => void;
 }
 
 const GithubContext = createContext<IGithubContext>({} as IGithubContext);
@@ -17,25 +18,43 @@ export const GithubProvider: React.FC = ({ children }) => {
 
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  const setLoading = () => dispatch({ type: ActionType.SET_LOADING });
+  const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
-  // Get initial users (testing purposes)
-  const fetchUsers = async () => {
+  // Get search results
+  const searchUsers = async (text: string) => {
     setLoading();
-    const response = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`);
-    const data = await response.json();
 
-    dispatch({
-      type: ActionType.GET_USERS,
-      payload: data,
+    const params = new URLSearchParams({
+      q: text,
     });
 
-    console.log(data);
+    const response = await fetch(
+      `${process.env.REACT_APP_GITHUB_URL}/search/users?${params}`,
+    );
+    const { items } = await response.json();
+
+    dispatch({
+      type: 'GET_USERS',
+      payload: items,
+    });
+
+    console.log(items);
+  };
+
+  const clearUsers = () => {
+    dispatch({
+      type: 'CLEAR_USERS',
+    });
   };
 
   return (
     <GithubContext.Provider
-      value={{ users: state.users, loading: state.loading }}
+      value={{
+        users: state.users,
+        loading: state.loading,
+        searchUsers,
+        clearUsers,
+      }}
     >
       {children}
     </GithubContext.Provider>
