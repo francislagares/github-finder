@@ -11,16 +11,24 @@ interface IState {
 
 enum ActionType {
   GET_USERS = 'GET_USERS',
+  CLEAR_USERS = 'CLEAR_USERS',
   SET_LOADING = 'SET_LOADING',
 }
 
 interface IGetUsers {
-  type: ActionType.GET_USERS;
+  type: 'GET_USERS';
   payload: IUser[];
 }
 
-interface ISetLoading {
-  type: ActionType.SET_LOADING;
+interface IClearUsers {
+  type: 'CLEAR_USERS';
 }
 
-type IAction = IGetUsers | ISetLoading;
+interface ISetLoading {
+  type: 'SET_LOADING';
+}
+
+type IAction = IGetUsers | IClearUsers | ISetLoading;
+
+type Change = React.ChangeEvent<HTMLInputElement>;
+type Submit = React.FormEvent<HTMLFormElement>;
