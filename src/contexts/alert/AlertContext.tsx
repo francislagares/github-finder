@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import alertReducer from './AlertReducer';
+import { ActionType } from './types/Actions';
 
 interface IAlertContext {
   alert: {
-    msg: string | null;
+    msg: string;
     type: string;
   };
   setAlert: (msg: string, type: string) => void;
@@ -12,18 +13,18 @@ interface IAlertContext {
 const AlertContext = createContext({} as IAlertContext);
 
 export const AlertProvider: React.FC = ({ children }) => {
-  const initialState = null;
+  const initialState = {};
 
   const [state, dispatch] = useReducer(alertReducer, initialState);
 
   const setAlert = (msg: string, type: string) => {
     dispatch({
-      type: 'SET_ALERT',
+      type: ActionType.SET_ALERT,
       payload: { msg, type },
     });
 
     setTimeout(() => {
-      dispatch({ type: 'REMOVE_ALERT' });
+      dispatch({ type: ActionType.REMOVE_ALERT });
     }, 3000);
   };
 

@@ -1,17 +1,17 @@
-/* type IAction = ISetAlert | IRemoveAlert;
- */
+import { ActionType } from './types/Actions';
+
 interface IState {
   alert: {
-    msg: string | null;
-    type: string | null;
+    msg: string;
+    type: string;
   };
 }
 
 const alertReducer = (state: IState, action: any) => {
   switch (action.type) {
-    case 'SET_ALERT':
+    case ActionType.SET_ALERT:
       return action.payload;
-    case 'REMOVE_ALERT':
+    case ActionType.REMOVE_ALERT:
       return null;
     default:
       return state;

@@ -1,24 +1,31 @@
+import { ActionType, IAction } from './types/Actions';
+
 interface IState {
   users: IUser[];
+  user: IUser;
   loading: boolean;
 }
 
-type IAction = IGetUsers | IClearUsers | ISetLoading;
-
 const githubReducer = (state: IState, action: IAction) => {
   switch (action.type) {
-    case 'GET_USERS':
+    case ActionType.GET_USERS:
       return {
         ...state,
         users: action.payload,
         loading: false,
       };
-    case 'CLEAR_USERS':
+    case ActionType.GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
+      };
+    case ActionType.CLEAR_USERS:
       return {
         ...state,
         users: [],
       };
-    case 'SET_LOADING':
+    case ActionType.SET_LOADING:
       return {
         ...state,
         loading: true,
