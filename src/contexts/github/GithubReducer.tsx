@@ -1,3 +1,10 @@
+interface IState {
+  users: IUser[];
+  loading: boolean;
+}
+
+type IAction = IGetUsers | IClearUsers | ISetLoading;
+
 const githubReducer = (state: IState, action: IAction) => {
   switch (action.type) {
     case 'GET_USERS':
