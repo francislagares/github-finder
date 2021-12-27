@@ -3,6 +3,7 @@ import { ActionType, IAction } from './types/Actions';
 interface IState {
   users: IUser[];
   user: IUser;
+  repos: IRepo[];
   loading: boolean;
 }
 
@@ -24,6 +25,12 @@ const githubReducer = (state: IState, action: IAction) => {
       return {
         ...state,
         users: [],
+      };
+    case ActionType.GET_REPOS:
+      return {
+        ...state,
+        repos: action.payload.repos,
+        loading: false,
       };
     case ActionType.SET_LOADING:
       return {

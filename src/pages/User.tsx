@@ -4,17 +4,37 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Spinner from 'components/layout/Spinner';
+import RepoList from 'components/repos/RepoList';
+import { getUser, getUserRepos } from 'contexts/github/GithubActions';
 import { useGithubContext } from 'contexts/github/GithubContext';
+import { ActionType } from 'contexts/github/types/Actions';
 
 const User = () => {
-  const { getUser, user, loading } = useGithubContext();
+  const { user, repos, dispatch, loading } = useGithubContext();
 
   const params = useParams();
 
   useEffect(() => {
-    // @ts-ignore
-    getUser(params.login);
-  }, []);
+    dispatch({ type: ActionType.SET_LOADING });
+    const getUserData = async () => {
+      // @ts-ignore
+      const userData = await getUser(params.login);
+
+      dispatch({ type: ActionType.GET_USER, payload: userData });
+
+      // @ts-ignore
+      const userRepos = await getUserRepos(params.login);
+
+      dispatch({
+        type: ActionType.GET_REPOS,
+        payload: { repos: userRepos },
+      });
+
+      console.log(userData, userRepos);
+    };
+
+    getUserData();
+  }, [dispatch, params.login]);
 
   const {
     name,
@@ -161,6 +181,8 @@ const User = () => {
             </div>
           </div>
         </div>
+
+        <RepoList repos={repos} />
       </div>
     </>
   );
