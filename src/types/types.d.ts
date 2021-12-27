@@ -1,40 +1,30 @@
 interface IUser {
   id: number;
-  login: string;
+  name: string;
+  type: string;
   avatar_url: string;
+  location: string;
+  bio: string;
+  blog: boolean;
+  twitter_username: boolean;
+  login: string;
+  html_url: string;
+  followers: string;
+  following: string;
+  public_repos: string;
+  public_gists: string;
+  hireable: boolean;
 }
 
-interface IState {
-  users: IUser[];
-  loading: boolean;
-}
-
-interface IGetUsers {
-  type: 'GET_USERS';
-  payload: IUser[];
-}
-
-interface IClearUsers {
-  type: 'CLEAR_USERS';
-}
-
-interface ISetLoading {
-  type: 'SET_LOADING';
-}
-
-interface ISetAlert {
-  type: 'SET_ALERT';
-  payload: { msg: string; type: string };
-}
-
-interface IRemoveAlert {
-  type: 'REMOVE_ALERT';
-}
-
-enum ActionType {
-  GET_USERS = 'GET_USERS',
-  CLEAR_USERS = 'CLEAR_USERS',
-  SET_LOADING = 'SET_LOADING',
+interface IRepo {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+  forks: number;
+  open_issues: number;
+  watchers_count: number;
+  stargazers_count: number;
 }
 
 type Change = React.ChangeEvent<HTMLInputElement>;
