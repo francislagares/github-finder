@@ -2,25 +2,38 @@ export enum ActionType {
   GET_USERS = 'GET_USERS',
   GET_USER = 'GET_USER',
   CLEAR_USERS = 'CLEAR_USERS',
+  GET_REPOS = 'GET_REPOS',
   SET_LOADING = 'SET_LOADING',
 }
 
-export interface IGetUsers {
+interface IGetUsers {
   type: ActionType.GET_USERS;
   payload: IUser[];
 }
 
-export interface IGetUser {
+interface IGetUser {
   type: ActionType.GET_USER;
   payload: IUser;
 }
 
-export interface IClearUsers {
+interface IClearUsers {
   type: ActionType.CLEAR_USERS;
 }
 
-export interface ISetLoading {
+interface IGetRepos {
+  type: ActionType.GET_REPOS;
+  payload: {
+    repos: IRepo[];
+  };
+}
+
+interface ISetLoading {
   type: ActionType.SET_LOADING;
 }
 
-export type IAction = IGetUsers | IGetUser | IClearUsers | ISetLoading;
+export type IAction =
+  | IGetUsers
+  | IGetUser
+  | IClearUsers
+  | IGetRepos
+  | ISetLoading;
